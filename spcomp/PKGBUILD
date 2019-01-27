@@ -31,3 +31,4 @@ package() {
   mkdir -p "$pkgdir/usr/bin"
   cp "$srcdir/sourcepawn-$_commit/build/compiler/spcomp/spcomp" "$pkgdir/usr/bin/spcomp"
 }
+

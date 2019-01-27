@@ -21,3 +21,4 @@ package() {
   cd "$srcdir/ambuild-$_commit/"
   python setup.py install --root="$pkgdir" --optimize=1 --skip-build
 }
+
