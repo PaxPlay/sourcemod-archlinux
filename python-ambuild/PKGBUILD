@@ -1,0 +1,23 @@
+# Maintainer: PaxPlay <pax@paxplay.me>
+
+pkgname=python-ambuild
+pkgver=2.0
+pkgrel=1
+pkgdesc='AlliedModders C++ Build System'
+url='https://github.com/alliedmodders/ambuild'
+arch=('any')
+license=('none')
+depends=('python' 'python-setuptools')
+_commit='d25ee6fd37ba04a6d20453c7fbb31513fe6f6426'
+source=("https://github.com/alliedmodders/ambuild/archive/$_commit.tar.gz")
+sha256sums=('f0c1843446ca766281e6846146c1f887bf7e9acd6be61692a6f038bcf44820ae')
+
+build() {
+  cd "$srcdir/ambuild-$_commit/"
+  python setup.py build
+}
+
+package() {
+  cd "$srcdir/ambuild-$_commit/"
+  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+}

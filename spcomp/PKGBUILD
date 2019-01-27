@@ -1,0 +1,33 @@
+# Maintainer: PaxPlay <pax@paxplay.me>
+
+pkgname=spcomp
+pkgver=1.10
+pkgrel=1
+pkgdesc='A small, statically typed scripting language.'
+url='https://github.com/alliedmodders/sourcepawn'
+arch=('any')
+license=('none')
+depends=('lib32-glibc')
+makedepends=('python-ambuild')
+_commit='1e4ce47e03b08c7ccce16684c1d12e54535414b9'
+_amtlcommit='84d47f1a1850f9d134022677d91209985206a07c'
+source=("https://github.com/alliedmodders/sourcepawn/archive/$_commit.tar.gz"
+        "https://github.com/alliedmodders/amtl/archive/$_amtlcommit.tar.gz")
+sha256sums=('74af954d5c6e7bc42fcd0425a92a8f2a26d186455e41726b99817070c4801d6e'
+            '3d5c987875e28235d98f959c4e007a6bf0a739ccdea7f0982f1ace5d8d623d8f')
+
+prepare() {
+  mkdir -p "$srcdir/sourcepawn-$_commit/build"
+}
+
+build() {
+  cd "$srcdir/sourcepawn-$_commit/build" || exit 1
+  python ../configure.py --build spcomp --amtl "$srcdir/amtl-$_amtlcommit"
+  ambuild
+}
+
+package() {
+  mkdir -p "$pkgdir/usr"
+  mkdir -p "$pkgdir/usr/bin"
+  cp "$srcdir/sourcepawn-$_commit/build/compiler/spcomp/spcomp" "$pkgdir/usr/bin/spcomp"
+}
