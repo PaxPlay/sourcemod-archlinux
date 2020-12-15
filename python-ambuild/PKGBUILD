@@ -8,9 +8,9 @@ url='https://github.com/alliedmodders/ambuild'
 arch=('any')
 license=('none')
 depends=('python' 'python-setuptools')
-_commit='d25ee6fd37ba04a6d20453c7fbb31513fe6f6426'
+_commit='6ad11a19bff17c8010778a634c9f0ff242603164'
 source=("https://github.com/alliedmodders/ambuild/archive/$_commit.tar.gz")
-sha256sums=('f0c1843446ca766281e6846146c1f887bf7e9acd6be61692a6f038bcf44820ae')
+sha256sums=('38614575a1eb08f9d27c4f95a078bd4c4356aea93edf32544c6652addfc001f6')
 
 build() {
   cd "$srcdir/ambuild-$_commit/"
