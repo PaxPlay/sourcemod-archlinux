@@ -9,12 +9,12 @@ arch=('any')
 license=('none')
 depends=('lib32-glibc')
 makedepends=('python-ambuild')
-_commit='1e4ce47e03b08c7ccce16684c1d12e54535414b9'
-_amtlcommit='84d47f1a1850f9d134022677d91209985206a07c'
+_commit='e8d7b67b0665baf1faf6d4985c1e92ac1163e43f'
+_amtlcommit='d0b8c6a1c8d30e5c50093de1cce63255faa904ef'
 source=("https://github.com/alliedmodders/sourcepawn/archive/$_commit.tar.gz"
         "https://github.com/alliedmodders/amtl/archive/$_amtlcommit.tar.gz")
-sha256sums=('74af954d5c6e7bc42fcd0425a92a8f2a26d186455e41726b99817070c4801d6e'
-            '3d5c987875e28235d98f959c4e007a6bf0a739ccdea7f0982f1ace5d8d623d8f')
+sha256sums=('4fa01addee5ddba14037f8ac270c4611a3652223d9e8bac7af81932143c2ead6'
+            '58356b4086a8b7aa1abd95b27310181950a29a50007eb73660c88b04962df4c6')
 
 prepare() {
   mkdir -p "$srcdir/sourcepawn-$_commit/build"
@@ -22,13 +22,16 @@ prepare() {
 
 build() {
   cd "$srcdir/sourcepawn-$_commit/build" || exit 1
-  python ../configure.py --build spcomp --amtl "$srcdir/amtl-$_amtlcommit"
+  rm -r "$srcdir/sourcepawn-$_commit/third_party/amtl"
+  ln -s "$srcdir/amtl-$_amtlcommit" "$srcdir/sourcepawn-$_commit/third_party/amtl" # move amtl over, for some reason giving a seperate path to ambuild is broken
+  #python ../configure.py --build spcomp --amtl "$srcdir/amtl-$_amtlcommit"
+  python ../configure.py --build spcomp
   ambuild
 }
 
 package() {
   mkdir -p "$pkgdir/usr"
   mkdir -p "$pkgdir/usr/bin"
-  cp "$srcdir/sourcepawn-$_commit/build/compiler/spcomp/spcomp" "$pkgdir/usr/bin/spcomp"
+  cp "$srcdir/sourcepawn-$_commit/build/compiler/spcomp/linux-x86_64/spcomp" "$pkgdir/usr/bin/spcomp"
 }
 
